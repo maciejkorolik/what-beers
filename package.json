@@ -1,0 +1,11 @@
+{
+  "name": "what-beers",
+  "version": "1.0.0",
+  "description": "script that checks what beers are available in selected pub",
+  "main": "index.js",
+  "author": "Maciej Korolik",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^15.4.0"
+  }
+}
