@@ -10,11 +10,20 @@ async function init() {
     const wrappers = Array.from(
       document.querySelectorAll(".panel.panel-default")
     ).slice(0, -1);
-    return wrappers.map((el) =>
-      // brewery, beer name and data is in the h4.cml_shadow element
-      // puppeteer returns textContent with many \t and \n so we need to remove them
-      el.querySelector("h4.cml_shadow").textContent.replace(/\n|\r|\t/g, "")
-    );
+
+    const descriptions = wrappers.map((el) => {
+      const nameElement = el.querySelector("h4.cml_shadow > span");
+      return nameElement.innerText.split("\n").map((el) => el.trim());
+    });
+
+    const structuredDescriptions = descriptions.map((beer) => {
+      return {
+        brewery: beer[0],
+        type: beer[1],
+        data: beer[2],
+      };
+    });
+    return structuredDescriptions;
   });
   console.log(beers);
   await browser.close();
