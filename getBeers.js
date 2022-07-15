@@ -13,11 +13,17 @@ async function getBeers(url) {
 
   const beers = wrappers.map((el) => {
     const nameElement = el.querySelector("h4.cml_shadow > span");
+    const backgroundElement = el.querySelector(".panel-body.cml_semi");
     const beerType = el.querySelector("span.cml_shadow > b").textContent.trim();
     const breweryName = nameElement
       .querySelector("b.brewery")
       .text.replace(/\n|\r|\t/g, "")
       .trim();
+    const beerImage =
+      backgroundElement.attributes.style
+        ?.replace("background-image:url(", "")
+        .replace(")", " ")
+        .split(" ")[0] || null;
     const brs = nameElement.querySelectorAll("br");
     const beerName = brs[0].nextSibling.text.replace(/\n|\r|\t/g, "").trim();
     const beerData = brs[1].nextSibling.text.replace(/\n|\r|\t/g, "").trim();
@@ -26,6 +32,7 @@ async function getBeers(url) {
       name: beerName,
       data: beerData,
       type: beerType,
+      image: beerImage,
     };
   });
   return beers;
