@@ -1,7 +1,7 @@
-const getBeers = require("./getBeers");
+import getBeers from "./getBeers.js";
 
 async function init() {
-  const beers = await getBeers("https://ontap.pl/?multitap_id=298");
+  const beers = await getBeers("https://4hops.ontap.pl");
   console.log(beers);
 }
 

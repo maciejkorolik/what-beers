@@ -5,7 +5,10 @@
   "main": "index.js",
   "author": "Maciej Korolik",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
+    "node-fetch": "^3.2.8",
+    "node-html-parser": "^5.3.3",
     "puppeteer": "^15.4.0"
   }
 }
