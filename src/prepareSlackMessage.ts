@@ -1,7 +1,14 @@
-function prepareSlackMessage(pubName, beers) {
+import { Beer } from "./types";
+
+function prepareSlackMessage(
+  pubName: string,
+  beers: Beer[],
+  inChannel: boolean = false
+) {
   return {
     username: "Beer Bot",
     icon_emoji: "beer",
+    response_type: inChannel ? "in_channel" : "ephemeral",
     blocks: [
       {
         type: "section",

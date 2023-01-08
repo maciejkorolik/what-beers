@@ -1,7 +1,7 @@
-import fetch from "node-fetch";
 import { parse } from "node-html-parser";
+import { Beer } from "./types";
 
-async function getBeers(url) {
+async function getBeers(url: string): Promise<Beer[]> {
   const response = await fetch(url);
   const html = await response.text();
   const parsedHTML = parse(html);
