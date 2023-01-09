@@ -11,20 +11,32 @@ function prepareSlackMessage(
     icon_emoji: "beer",
     response_type: inChannel ? "in_channel" : "ephemeral",
     blocks: [
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `*Today you are going to ${pubName}!* :tada:`,
-        },
-      },
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `Beers available there today:`,
-        },
-      },
+      ...(isRandom
+        ? [
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `*Today you are going to ${pubName}!* :tada:`,
+              },
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `Beers available there today:`,
+              },
+            },
+          ]
+        : [
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `:beers: *Beers available at ${pubName} today:*`,
+              },
+            },
+          ]),
       {
         type: "divider",
       },

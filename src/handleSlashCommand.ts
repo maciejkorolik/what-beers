@@ -4,7 +4,6 @@ import getBeers from "./getBeers";
 import prepareSlackMessage from "./prepareSlackMessage";
 import { pubs } from "./pubsList";
 import { getRandomElement } from "./utils";
-
 const allowedChannels = JSON.parse(ALLOWED_CHANNELS);
 const availablePubs = Object.keys(pubs);
 
