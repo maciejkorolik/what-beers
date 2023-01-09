@@ -3,7 +3,8 @@ import { Beer } from "./types";
 function prepareSlackMessage(
   pubName: string,
   beers: Beer[],
-  inChannel: boolean = false
+  inChannel: boolean = false,
+  isRandom: boolean = false
 ) {
   return {
     username: "Beer Bot",
@@ -14,7 +15,14 @@ function prepareSlackMessage(
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `Beers available today at *${pubName}*:`,
+          text: `*Today you are going to ${pubName}!* :tada:`,
+        },
+      },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `Beers available there today:`,
         },
       },
       {
@@ -25,7 +33,9 @@ function prepareSlackMessage(
           type: "section",
           text: {
             type: "mrkdwn",
-            text: `*${beer.name}*\n - ${beer.brewery}\n - ${beer.type}\n - ${beer.data}`,
+            text: `*${beer.name}*\n - ${beer.brewery}\n - ${beer.type}\n - ${
+              beer.data
+            }${beer.price && `\n - ${beer.price}`}`,
           },
           accessory: beer.image
             ? {
@@ -36,6 +46,16 @@ function prepareSlackMessage(
             : undefined,
         };
       }),
+      {
+        type: "divider",
+      },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: ":information_source: All data comes from <https://ontap.pl|ontap.pl>",
+        },
+      },
     ],
   };
 }

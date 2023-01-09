@@ -3,7 +3,8 @@ export type Beer = {
   name: string;
   data: string;
   type: string;
-  image: string;
+  image: string | null;
+  price?: string;
 };
 
 declare global {

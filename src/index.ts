@@ -1,10 +1,6 @@
 import { Router } from "itty-router";
-import getHolidays from "./getHolidays";
-import prepareSlackMessage from "./prepareSlackMessage";
-
+import handleSlashCommand from "./handleSlashCommand";
 const router = Router();
-
-const allowedChannels = JSON.parse(ALLOWED_CHANNELS);
 
 function jsonResponse(data) {
   return new Response(JSON.stringify(data), {
@@ -14,29 +10,9 @@ function jsonResponse(data) {
   });
 }
 
-// async function sendSlackMessage() {
-//   const beers = await getBeers("https://4hops.ontap.pl");
-//   const message = prepareSlackMessage("4hops", beers);
-//   await fetch(SLACK_HOOK_URL, {
-//     method: "post",
-//     body: JSON.stringify(message),
-//     headers: { "Content-Type": "application/json" },
-//   });
-// }
-
-router.get("", async () => {
-  const beers = await getBeers("https://4hops.ontap.pl");
-  return jsonResponse(beers);
-});
-
-router.post("/send-slack-message", async ({ query }) => {
-  if (query.token === MESSAGE_TOKEN) {
-    const body = await request.text();
-    const params = qs.parse(body);
-    const beers = await getBeers("https://4hops.ontap.pl");
-    const channelId = params?.channel_id || null;
-    const shouldDisplayInChannel = allowedChannels.includes(channelId);
-    const message = prepareSlackMessage("4hops", beers, shouldDisplayInChannel);
+router.post("/send-slack-message", async (request) => {
+  if (request.query.token === MESSAGE_TOKEN) {
+    const message = await handleSlashCommand(request);
     return jsonResponse(message);
   } else {
     return new Response("Not authorized", { status: 401 });

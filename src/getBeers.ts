@@ -24,6 +24,9 @@ async function getBeers(url: string): Promise<Beer[]> {
         ?.replace("background-image:url(", "")
         .replace(")", " ")
         .split(" ")[0] || null;
+    const beerPrice = el
+      .querySelector(".panel-footer > .row > .col-xs-7")
+      .textContent.trim();
     const brs = nameElement.querySelectorAll("br");
     const beerName = brs[0].nextSibling.text.replace(/\n|\r|\t/g, "").trim();
     const beerData = brs[1].nextSibling.text.replace(/\n|\r|\t/g, "").trim();
@@ -33,9 +36,11 @@ async function getBeers(url: string): Promise<Beer[]> {
       data: beerData,
       type: beerType,
       image: beerImage,
+      price: beerPrice,
     };
   });
-  return beers;
+  const filteredBeers = beers.filter((beer) => beer.name !== "N/A");
+  return filteredBeers;
 }
 
 export default getBeers;
